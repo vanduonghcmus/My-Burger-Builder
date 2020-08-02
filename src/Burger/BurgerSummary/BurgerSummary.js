@@ -16,6 +16,7 @@ const burgerSummary = (props) => {
 			<h3>Your Order</h3>
 			<p>A delicious burger with the folowing ingredients: </p>
 			<ul>{ingredientsSummary}</ul>
+			<p>Continue to Checkout?</p>
 		</Aux>
 	);
 };
