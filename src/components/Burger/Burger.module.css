@@ -3,7 +3,7 @@
 	margin: auto;
 	height: 250px;
 	text-align: center;
-	overflow: scroll;
+	overflow: auto;
 	font-size: 1.2rem;
 	font-weight: bold;
 }
@@ -13,9 +13,4 @@
 		width: 400px;
 		height: 350px;
 	}
-}
-
-::-webkit-scrollbar {
-	width: 0px; /* Remove scrollbar space */
-	background: transparent; /* Optional: just make scrollbar invisible */
 }
