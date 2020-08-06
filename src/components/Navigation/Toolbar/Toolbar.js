@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import styles from './Toolbar.module.css';
 import Logo from '../../Logo/Logo';
@@ -10,11 +11,15 @@ const toolbar = (props) => (
 		<DrawerToggle clicked={props.drawerToggleClicked} />
 		<div className={styles.Logo}>
 			<Logo />
-			<nav className={styles.DesktopOnly}>
-				<NavigationItems />
-			</nav>
 		</div>
+		<nav className={styles.DesktopOnly}>
+			<NavigationItems />
+		</nav>
 	</header>
 );
+
+toolbar.propTypes = {
+	drawerToggleClicked: PropTypes.func,
+};
 
 export default toolbar;

@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import styles from './BuildControls.module.css';
 import BuildControl from './BuildControl/BuildControl';
@@ -10,7 +11,7 @@ const controls = [
 	{ label: 'Bacon', type: 'bacon' },
 ];
 
-const buildControl = (props) => {
+const buildControls = (props) => {
 	return (
 		<div className={styles.BuildControls}>
 			<p>
@@ -37,4 +38,13 @@ const buildControl = (props) => {
 	);
 };
 
-export default buildControl;
+buildControls.propTypes = {
+	ingredientAdded: PropTypes.func,
+	ingredientRemoved: PropTypes.func,
+	disabled: PropTypes.object,
+	ordered: PropTypes.func,
+	price: PropTypes.number,
+	purchasable: PropTypes.bool,
+};
+
+export default buildControls;
