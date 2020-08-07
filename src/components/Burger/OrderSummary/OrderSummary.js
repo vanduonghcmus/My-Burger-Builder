@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Aux from '../../../hoc/Auxiliary/Auxiliary';
 import Button from '../../../UI/Button/Button';
 
-class BurgerSummary extends Component {
+class OrderSummary extends Component {
 	// this could be a functional component, doesn't have to be a class-component
 	componentWillUpdate() {
 		console.log('[BurgerSummary] will update');
@@ -40,11 +40,11 @@ class BurgerSummary extends Component {
 	}
 }
 
-BurgerSummary.propTypes = {
+OrderSummary.propTypes = {
 	purchaseContinued: PropTypes.func,
 	purchaseCancelled: PropTypes.func,
 	price: PropTypes.number,
 	ingredients: PropTypes.object,
 };
 
-export default BurgerSummary;
+export default OrderSummary;
