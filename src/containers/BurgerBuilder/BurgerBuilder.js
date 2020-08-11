@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-import axios from '../axios-burgerSummary';
-import Aux from '../hoc/Auxiliary/Auxiliary';
-import BuildControls from '../components/Burger/BuildControls/BuildControls';
-import Modal from '../UI/Modal/Modal';
-import OrderSummary from '../components/Burger/OrderSummary/OrderSummary';
-import Spinner from '../UI/Spinner/Spinner';
-import Burger from '../components/Burger/Burger';
-import withErrorHandler from '../hoc/withErrorHandler/withErrorHandler';
+import axios from '../../axios-burgerSummary';
+import Aux from '../../hoc/Auxiliary/Auxiliary';
+import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+import Modal from '../../UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
+import Spinner from '../../UI/Spinner/Spinner';
+import Burger from '../../components/Burger/Burger';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 const INGREDIENT_PRICE = {
 	salad: 0.5,
@@ -32,6 +32,7 @@ class BurgerBuilder extends Component {
 	};
 
 	componentDidMount() {
+		console.log(this.props);
 		axios
 			.get('https://react-my-burger-57df8.firebaseio.com/ingredients.json')
 			.then((res) => {
@@ -51,27 +52,27 @@ class BurgerBuilder extends Component {
 	};
 
 	purchaseContinueHandler = () => {
-		this.setState({ loading: true });
+		// this.setState({ loading: true });
+		// const order = {
+		// 	ingredients: this.state.ingredients,
+		// 	price: this.state.totalPrice,
+		// 	customer: {
+		// 		name: 'Duong Nguyen',
+		// 		address: {
+		// 			street: 'HCMStreet 1',
+		// 			zipcode: '123456',
+		// 			country: 'Viet Nam',
+		// 		},
+		// 		email: 'test@test.com.vn',
+		// 	},
+		// 	deliveryMethod: 'fastest',
+		// };
+		// axios
+		// 	.post('/order.json', order)
+		// 	.then((res) => this.setState({ loading: false, purchasing: false }))
+		// 	.catch((err) => this.setState({ loading: false, purchasing: false }));
 
-		const order = {
-			ingredients: this.state.ingredients,
-			price: this.state.totalPrice,
-			customer: {
-				name: 'Duong Nguyen',
-				address: {
-					street: 'HCMStreet 1',
-					zipcode: '123456',
-					country: 'Viet Nam',
-				},
-				email: 'test@test.com.vn',
-			},
-			deliveryMethod: 'fastest',
-		};
-
-		axios
-			.post('/order.json', order)
-			.then((res) => this.setState({ loading: false, purchasing: false }))
-			.catch((err) => this.setState({ loading: false, purchasing: false }));
+		this.props.history.push('/checkout');
 	};
 
 	updatePurchaseState(ingredients) {
