@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 
-import axios from '../axios-burgerSummary';
-import Aux from '../hoc/Auxiliary/Auxiliary';
-import BuildControls from '../components/Burger/BuildControls/BuildControls';
-import Modal from '../UI/Modal/Modal';
-import OrderSummary from '../components/Burger/OrderSummary/OrderSummary';
-import Spinner from '../UI/Spinner/Spinner';
-import Burger from '../components/Burger/Burger';
-import withErrorHandler from '../hoc/withErrorHandler/withErrorHandler';
+import axios from '../../axios-burgerSummary';
+import Aux from '../../hoc/Auxiliary/Auxiliary';
+import BuildControls from '../../components/Burger/BuildControls/BuildControls';
+import Modal from '../../UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
+import Spinner from '../../UI/Spinner/Spinner';
+import Burger from '../../components/Burger/Burger';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 const INGREDIENT_PRICE = {
 	salad: 0.5,
