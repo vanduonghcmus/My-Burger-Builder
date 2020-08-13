@@ -2,26 +2,65 @@ import React, { Component } from 'react';
 
 import Button from '../../../UI/Button/Button';
 import styles from './ContactData.module.css';
+import axios from '../../../axios-burgerSummary';
+import Spinner from '../../../UI/Spinner/Spinner';
 
 class ContactData extends Component {
 	state = {
 		name: '',
 		email: '',
-		street: '',
-		postal: '',
+		address: {
+			street: '',
+			postal: '',
+		},
+		loading: false,
+	};
+
+	orderHandler = (event) => {
+		event.preventDefault();
+		this.setState({ loading: true });
+		const order = {
+			ingredients: this.props.ingredients,
+			price: this.props.price,
+			customer: {
+				name: 'Duong Nguyen',
+				address: {
+					street: 'HCMStreet 1',
+					zipcode: '123456',
+					country: 'Viet Nam',
+				},
+				email: 'test@test.com.vn',
+			},
+			deliveryMethod: 'fastest',
+		};
+		axios
+			.post('/order.json', order)
+			.then((res) => this.setState({ loading: false }))
+			.catch((err) => this.setState({ loading: false })); // this.setState({ loading: true });
+		this.props.history.push('/');
 	};
 
 	render() {
+		let form = (
+			<form>
+				<input type="text" name="name" placeholder="Your Name" />
+				<input type="text" name="email" placeholder="Your Email" />
+				<input type="text" name="street" placeholder="Street" />
+				<input type="text" name="postal" placeholder="Postal" />
+				<Button btnType="Success" clicked={this.orderHandler}>
+					ORDER
+				</Button>
+			</form>
+		);
+
+		if (this.state.loading) {
+			form = <Spinner />;
+		}
+
 		return (
 			<div className={styles.ContactData}>
 				<h4>Enter your Contact Data</h4>
-				<form>
-					<input type="text" name="name" placeholder="Your Name" />
-					<input type="text" name="email" placeholder="Your Email" />
-					<input type="text" name="street" placeholder="Street" />
-					<input type="text" name="postal" placeholder="Postal" />
-				</form>
-				<Button btnType="Success">ORDER</Button>
+				{form}
 			</div>
 		);
 	}
