@@ -52,27 +52,22 @@ class BurgerBuilder extends Component {
 	};
 
 	purchaseContinueHandler = () => {
-		// this.setState({ loading: true });
-		// const order = {
-		// 	ingredients: this.state.ingredients,
-		// 	price: this.state.totalPrice,
-		// 	customer: {
-		// 		name: 'Duong Nguyen',
-		// 		address: {
-		// 			street: 'HCMStreet 1',
-		// 			zipcode: '123456',
-		// 			country: 'Viet Nam',
-		// 		},
-		// 		email: 'test@test.com.vn',
-		// 	},
-		// 	deliveryMethod: 'fastest',
-		// };
-		// axios
-		// 	.post('/order.json', order)
-		// 	.then((res) => this.setState({ loading: false, purchasing: false }))
-		// 	.catch((err) => this.setState({ loading: false, purchasing: false }));
+		const queryParams = []; // khởi tạo 1 mảng để lưu ingredients
+		for (let i in this.state.ingredients) {
+			queryParams.push(
+				encodeURIComponent(i) +
+					'=' +
+					encodeURIComponent(this.state.ingredients[i]),
+			);
+		}
+		// queyParams=["salad=value","bacon=value",...]
+		queryParams.push('price=' + this.state.totalPrice);
+		const queryString = queryParams.join('&');
 
-		this.props.history.push('/checkout');
+		this.props.history.push({
+			pathname: '/checkout',
+			search: '?' + queryString,
+		});
 	};
 
 	updatePurchaseState(ingredients) {
