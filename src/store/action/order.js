@@ -30,11 +30,16 @@ export const purchaseBurger = (orderData) => {
       .post("/order.json", orderData)
       .then((res) => {
         console.log(orderData);
-        dispatch(purchaseBurgerSuccess(res.data, orderData));
+        dispatch(purchaseBurgerSuccess(res.data.name, orderData));
       })
       .catch((err) => {
         dispatch(purchaseBurgerFail(err));
       });
-    this.props.history.push("/");
+  };
+};
+
+export const purchaseInit = () => {
+  return {
+    type: actionTypes.PURCHASE_INIT,
   };
 };
