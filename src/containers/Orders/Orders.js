@@ -1,46 +1,46 @@
-import React, { Component } from 'react';
-import axios from '../../axios-burgerSummary';
+import React, { Component } from "react";
+import axios from "../../axios-burgerSummary";
+import { connect } from "react-redux";
 
-import Order from '../../components/Order/Order';
-import withErrorHnadler from '../../hoc/withErrorHandler/withErrorHandler';
+import Order from "../../components/Order/Order";
+import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
+import * as action from "../../store/action/index";
+import Spinner from "../../UI/Spinner/Spinner";
 
 class Orders extends Component {
-	state = {
-		order: [],
-		loading: true,
-	};
+  componentDidMount() {
+    this.props.onFetchOrder();
+  }
 
-	componentDidMount() {
-		axios
-			.get('/order.json')
-			.then((res) => {
-				const orderData = [];
-				for (let key in res.data) {
-					orderData.push({
-						...res.data[key],
-						id: key,
-					});
-				}
-				this.setState({ loading: false, order: orderData });
-			})
-			.catch((err) => {
-				this.setState({ loading: false });
-			});
-	}
-
-	render() {
-		return (
-			<div>
-				{this.state.order.map((order) => (
-					<Order
-						key={order.id}
-						ingredients={order.ingredients}
-						price={order.price}
-					/>
-				))}
-			</div>
-		);
-	}
+  render() {
+    let orderLoading = <Spinner />;
+    if (!this.props.loading) {
+      orderLoading = this.props.order.map((order) => (
+        <Order
+          key={order.id}
+          ingredients={order.ingredients}
+          price={order.price}
+        />
+      ));
+    }
+    return <div>{orderLoading}</div>;
+  }
 }
 
-export default withErrorHnadler(Orders, axios);
+const mapStateToProps = (state) => {
+  return {
+    order: state.order.orders,
+    loading: state.order.loading,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFetchOrder: () => dispatch(action.fetchOrders()),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorHandler(Orders, axios));
