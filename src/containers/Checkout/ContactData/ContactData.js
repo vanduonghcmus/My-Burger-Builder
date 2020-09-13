@@ -6,6 +6,8 @@ import styles from "./ContactData.module.css";
 import axios from "../../../axios-burgerSummary";
 import Spinner from "../../../UI/Spinner/Spinner";
 import Input from "../../../UI/Input/Input";
+import withErrorHandler from "../../../hoc/withErrorHandler/withErrorHandler";
+import * as orderActions from "../../../store/action/index";
 
 class ContactData extends Component {
   state = {
@@ -98,7 +100,6 @@ class ContactData extends Component {
       },
     },
     formIsValid: false,
-    loading: false,
   };
 
   componentDidMount() {
@@ -107,25 +108,18 @@ class ContactData extends Component {
 
   orderHandler = (event) => {
     event.preventDefault(); // to not reload the page
-    this.setState({ loading: true });
-
     const formData = {};
     for (let formElementIdentifier in this.state.orderForms) {
       formData[formElementIdentifier] = this.state.orderForms[
         formElementIdentifier
       ].value;
     }
-
     const order = {
       ingredients: this.props.ings,
       price: this.props.price,
       orderData: formData,
     };
-    axios
-      .post("/order.json", order)
-      .then((res) => this.setState({ loading: false }))
-      .catch((err) => this.setState({ loading: false })); // this.setState({ loading: true });
-    this.props.history.push("/");
+    this.props.onOrderBurger(order);
   };
 
   checkValidity = (value, rules) => {
@@ -204,7 +198,7 @@ class ContactData extends Component {
       </form>
     );
 
-    if (this.state.loading) {
+    if (this.props.loading) {
       form = <Spinner />;
     }
 
@@ -221,7 +215,18 @@ const mapStateToProps = (state) => {
   return {
     ings: state.ingredients,
     price: state.totalPrice,
+    loading: state.loading,
   };
 };
 
-export default connect(mapStateToProps)(ContactData);
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onOrderBurger: (orderData) =>
+      dispatch(orderActions.purchaseBurger(orderData)),
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withErrorHandler(ContactData, axios));
