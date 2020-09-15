@@ -1,8 +1,10 @@
 import React, { Component } from "react";
+import { connect } from "react-redux";
 
 import styles from "./Auth.module.css";
 import Input from "../../UI/Input/Input";
 import Button from "../../UI/Button/Button";
+import * as action from "../../store/action/index";
 
 class Auth extends Component {
   state = {
@@ -36,6 +38,7 @@ class Auth extends Component {
         touched: false,
       },
     },
+    isSignup: false,
   };
   checkValidity = (value, rules) => {
     let isValid = true;
@@ -53,7 +56,7 @@ class Auth extends Component {
       isValid = value.length >= rules.minLength && isValid;
     }
     if (rules.isEmail) {
-      const pattern = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      const pattern = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       isValid = pattern.test(value) && isValid;
     }
     return isValid;
@@ -73,6 +76,23 @@ class Auth extends Component {
       },
     };
     this.setState({ controls: updatedControls });
+  };
+
+  submitHandler = (event) => {
+    event.preventDefault();
+    this.props.onAuth(
+      this.state.controls.email.value,
+      this.state.controls.password.value,
+      this.state.isSignup
+    );
+  };
+
+  switchAuthModeHandle = () => {
+    this.setState((prevState) => {
+      return {
+        isSignup: !prevState.isSignup,
+      };
+    });
   };
 
   render() {
@@ -98,13 +118,23 @@ class Auth extends Component {
 
     return (
       <div className={styles.Auth}>
-        <form>
+        <form onSubmit={this.submitHandler}>
           {form}
           <Button btnType="Success">SUBMIT</Button>
         </form>
+        <Button clicked={this.switchAuthModeHandle} btnType="Danger">
+          SWITCH TO {this.state.isSignup ? "SIGNIN" : "SIGNUP"}
+        </Button>
       </div>
     );
   }
 }
 
-export default Auth;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onAuth: (email, password, isSignup) =>
+      dispatch(action.auth(email, password, isSignup)),
+  };
+};
+
+export default connect(null, mapDispatchToProps)(Auth);
