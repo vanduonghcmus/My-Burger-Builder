@@ -21,4 +21,11 @@ describe("<NavigationItems />", () => {
     warper.setProps({ isAuthenticated: true });
     expect(warper.find(NavigationItem)).toHaveLength(3);
   });
+
+  it("Should render two <NavigationItems /> elements if authenticated", () => {
+    warper.setProps({ isAuthenticated: true });
+    expect(
+      warper.contains(<NavigationItem link="/logout">Logout</NavigationItem>)
+    ).toEqual(true);
+  });
 });
