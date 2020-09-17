@@ -17,7 +17,7 @@ const slideDrawer = (props) => {
   return (
     <Aux>
       <Backdrop show={props.open} clicked={props.closed} />
-      <div className={attachedSlideDrawer.join(" ")}>
+      <div className={attachedSlideDrawer.join(" ")} onClick={props.closed}>
         <div className={styles.Logo}>
           <Logo />
         </div>
