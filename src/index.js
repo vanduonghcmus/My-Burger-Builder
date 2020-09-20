@@ -12,7 +12,7 @@ import * as serviceWorker from "./serviceWorker";
 import burgerBuilderReducer from "./store/reducer/burgerBuilder";
 import orderReducer from "./store/reducer/order";
 import authReducer from "./store/reducer/auth";
-import { logoutSaga } from "./sagas/auth";
+import { watchAuth } from "./sagas/index";
 
 const composeEnhancers =
   process.env.NODE_ENV === "development"
@@ -32,7 +32,7 @@ const store = createStore(
   composeEnhancers(applyMiddleware(thunk, sagaMiddleware))
 );
 
-sagaMiddleware.run(logoutSaga);
+sagaMiddleware.run(watchAuth);
 
 const app = (
   <Provider store={store}>
