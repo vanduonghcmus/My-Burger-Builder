@@ -29,7 +29,6 @@ export const fetchIngredientFailed = () => {
 
 // asynchronous action
 export const initIngredients = () => {
-  debugger;
   return {
     type: actionTypes.INIT_INGREDIENT,
   };
