@@ -8,6 +8,8 @@ class OrderSummary extends Component {
   // this could be a functional component, doesn't have to be a class-component
 
   render() {
+    // this.props.ingredients = null;
+    // debugger;
     const ingredientsSummary = Object.keys(this.props.ingredients).map(
       (igKey) => {
         return (
