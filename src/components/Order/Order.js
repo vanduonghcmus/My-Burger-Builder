@@ -14,6 +14,7 @@ const Order = (props) => {
 
   const ingredientOutput = ingredient.map((ig) => (
     <span
+      key={ig.name}
       style={{
         textTransform: "capitalize",
         display: "inline-block",
