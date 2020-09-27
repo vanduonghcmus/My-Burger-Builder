@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import axios from "../../axios-burgerSummary";
 import { connect } from "react-redux";
 
@@ -7,25 +7,23 @@ import withErrorHandler from "../../hoc/withErrorHandler/withErrorHandler";
 import * as action from "../../store/action/index";
 import Spinner from "../../UI/Spinner/Spinner";
 
-class Orders extends Component {
-  componentDidMount() {
-    this.props.onFetchOrder(this.props.token, this.props.userId);
-  }
+const Orders = (props) => {
+  useEffect(() => {
+    props.onFetchOrder(props.token, props.userId);
+  }, []);
 
-  render() {
-    let orderLoading = <Spinner />;
-    if (!this.props.loading) {
-      orderLoading = this.props.order.map((order) => (
-        <Order
-          key={order.id}
-          ingredients={order.ingredients}
-          price={order.price}
-        />
-      ));
-    }
-    return <div>{orderLoading}</div>;
+  let orderLoading = <Spinner />;
+  if (!props.loading) {
+    orderLoading = props.order.map((order) => (
+      <Order
+        key={order.id}
+        ingredients={order.ingredients}
+        price={order.price}
+      />
+    ));
   }
-}
+  return <div>{orderLoading}</div>;
+};
 
 const mapStateToProps = (state) => {
   return {
