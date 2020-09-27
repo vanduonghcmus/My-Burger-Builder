@@ -134,7 +134,6 @@ const ContactData = (props) => {
       /* valid: true && formIsValid= true => true;
 				 valid: true && formIsValid= true => true; */
     }
-    console.log(formIsValid);
     setOrderForms(updateOrderForm);
     setFormIsValid(formIsValid);
   };
